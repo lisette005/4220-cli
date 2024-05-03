@@ -1,26 +1,7 @@
-#!/usr/bin/env node
-
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+// import { displayElixirsByName, displayElixirById } from './api.js';
 import { build_elixirs, elixir_id } from './api.js';
-
-async function displayElixirsByName(name) {
-    try {
-        const elixirs = await build_elixirs(name);
-        console.log('Elixirs found:', elixirs);
-    } catch (error) {
-        console.error('Error fetching elixirs:', error);
-    }
-}
-
-async function displayElixirById(id) {
-    try {
-        const elixir = await elixir_id(id);
-        console.log('Elixir found:', elixir);
-    } catch (error) {
-        console.error('Error fetching elixir:', error);
-    }
-}
 
 yargs(hideBin(process.argv))
     .command({
@@ -33,7 +14,7 @@ yargs(hideBin(process.argv))
             });
         },
         handler: async (argv) => {
-            await displayElixirsByName(argv.name);
+            await build_elixirs(argv.name);
         }
     })
     .command({
@@ -46,14 +27,11 @@ yargs(hideBin(process.argv))
             });
         },
         handler: async (argv) => {
-            await displayElixirById(argv.id);
+            await elixir_id(argv.id);
         }
     })
     .demandCommand(1, 'Please specify a command.')
     .help()
     .argv;
 
-
-
-
-
+// Fergus Fungal Budge
