@@ -6,7 +6,6 @@ export const build_elixirs = async (Name) => {
     try {
         const elixir_url = `${base}/Elixirs?Name=${Name}`;
         const response = await axios.get(elixir_url);
-        // console.log('Elixirs found:', response.data);
         return response.data;
     } catch (error) {
         console.error('Error fetching elixirs:', error);
@@ -18,7 +17,6 @@ export const elixir_id = async (id) => {
     try {
         const elixir_url = `${base}/Elixirs/${id}`;
         const response = await axios.get(elixir_url);
-        // console.log('Elixir found:', response.data);
         return response.data;
     } catch (error) {
         console.error('Error fetching elixir:', error);

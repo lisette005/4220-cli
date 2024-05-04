@@ -1,6 +1,5 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-// import { displayElixirsByName, displayElixirById } from './api.js';
 import { build_elixirs, elixir_id } from './api.js';
 import * as app from './app.js';
 
@@ -15,8 +14,7 @@ yargs(hideBin(process.argv))
             });
         },
         handler: async (argv) => {
-            // await build_elixirs(argv.name);    
-            await app.get_elixir()
+            await app.get_elixir(argv.name)
         }
     })
     .command({
@@ -29,12 +27,16 @@ yargs(hideBin(process.argv))
             });
         },
         handler: async (argv) => {
-            // await elixir_id(argv.id);
-            await app.get_elixir_id()
+            await app.get_elixir_id(argv.id)
         }
     })
     .demandCommand(1, 'Please specify a command.')
     .help()
     .argv;
 
-// Fergus Fungal Budge
+/*
+ elixirs: 
+    Frog Parts Mixture
+    Fergus Fungal Budge
+    Hair-Raising Potion
+ */
