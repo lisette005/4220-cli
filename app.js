@@ -16,6 +16,24 @@ const _print = (elixirs) => {
     });
 }
 
+// Function to handle searching by keyword
+export const searchByKeyword = async (keyword) => {
+    try {
+        // Search the selected API by keyword
+        const searchResults = await api.searchByKeyword(keyword);
+        
+        // Save search data in the mock database
+        await db.saveSearchHistoryToDatabase({ keyword, timestamp: new Date() });
+
+        // Prompt the user to select an item from the search results
+        // (You may implement a prompt function here or handle it in the CLI)
+
+        return searchResults;
+    } catch (error) {
+        throw new Error(`Error searching by keyword: ${error.message}`);
+    }
+};
+
 // Original function modified to save search history to mock database
 export const get_elixir = async (Name) => {
     try {

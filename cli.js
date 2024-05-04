@@ -14,6 +14,12 @@ yargs(hideBin(process.argv))
             yargs.positional('name', {
                 describe: 'Name of the elixir',
                 type: 'string'
+            })
+            .option('cache', {
+                alias: 'c',
+                describe: 'Use cache for search results',
+                type: 'boolean',
+                default: false // Default value is false (not using cache)
             });
         },
         handler: async (argv) => {
