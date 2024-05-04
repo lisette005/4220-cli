@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 const base = 'https://wizard-world-api.herokuapp.com';
 
 export const build_elixirs = async (Name) => {
@@ -23,6 +22,3 @@ export const elixir_id = async (id) => {
         return error;
     }
 }
-
-
-

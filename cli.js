@@ -1,7 +1,10 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { build_elixirs, elixir_id } from './api.js';
+//import { build_elixirs, elixir_id } from './api.js';
 import * as app from './app.js';
+import { saveSearchHistoryToDatabase } from './db.js'; // Added: Import saveSearchHistoryToDatabase function
+import { getSearchHistoryFromDatabase } from './db.js';
+
 
 yargs(hideBin(process.argv))
     .command({
@@ -14,7 +17,11 @@ yargs(hideBin(process.argv))
             });
         },
         handler: async (argv) => {
-            await app.get_elixir(argv.name)
+            await app.get_elixir(argv.name);
+            
+            // Added: Save search history to mock database
+            const entry = { type: 'search', query: argv.name, timestamp: new Date() };
+            await saveSearchHistoryToDatabase(entry);
         }
     })
     .command({
@@ -27,12 +34,29 @@ yargs(hideBin(process.argv))
             });
         },
         handler: async (argv) => {
-            await app.get_elixir_id(argv.id)
+            await app.get_elixir_id(argv.id);
+            
+            // Added: Save search history to mock database
+            const entry = { type: 'id', query: argv.id, timestamp: new Date() };
+            await saveSearchHistoryToDatabase(entry);
+        }
+    })
+    .command({
+        command: 'history',
+        describe: 'Display search history',
+        handler: async () => {
+            // Added: Retrieve search history from mock database
+            const history = await getSearchHistoryFromDatabase();
+            console.log('Search History:');
+            history.forEach(entry => {
+                console.log(`${entry.type}: ${entry.query} - ${entry.timestamp}`);
+            });
         }
     })
     .demandCommand(1, 'Please specify a command.')
     .help()
     .argv;
+
 
 /*
  elixirs: 

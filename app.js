@@ -1,6 +1,8 @@
-// clean up UI for both endpoints 
+// Importing necessary modules
 import * as api from './api.js';
+import * as db from './db.js'; // Added: Importing the mock database module
 
+// Function to print elixirs to the console
 const _print = (elixirs) => {
     console.log('-------------------------');
     elixirs.forEach(elixir => {
@@ -14,20 +16,30 @@ const _print = (elixirs) => {
     });
 }
 
+// Original function modified to save search history to mock database
 export const get_elixir = async (Name) => {
     try {
         const elixirs = await api.build_elixirs(Name);
         _print(elixirs);
+
+        // Added this to save search history to mock database
+        const entry = { type: 'search', query: Name, timestamp: new Date() };
+        await db.saveSearchHistoryToDatabase(entry); // Added: Saving search history
     } catch (error) {
         console.error('Error fetching elixirs:', error);
     }
 }
 
+// Original function modified to save search history to mock database
 export const get_elixir_id = async (id) => {
     try{
         const elixirs = await api.elixir_id(id);
-        _print([elixirs])
+        _print([elixirs]);
+        
+        // Added this to save search history to mock database
+        const entry = { type: 'id', query: id, timestamp: new Date() };
+        await db.saveSearchHistoryToDatabase(entry); // Added: Saving search history
     } catch(error) {
-        console.error(error)
+        console.error(error);
     }
 }
